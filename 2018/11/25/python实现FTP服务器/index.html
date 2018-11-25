@@ -7,9 +7,10 @@
     error: 'Copy error',
     noSupport: 'The browser does not support'
   }
-} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FTP服务的主动模式和被动模式"><span class="toc-number">1.</span> <span class="toc-text">FTP服务的主动模式和被动模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#规范一下代码"><span class="toc-number">4.</span> <span class="toc-text">规范一下代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后，说一下权限问题"><span class="toc-number">5.</span> <span class="toc-text">最后，说一下权限问题</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.guojing-em.com/static/resume/images/guojing-image.png"></div><div class="author-info__name text-center">GuoJing</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/Gavin-J" target="_blank">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">12</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://s1.ax1x.com/2018/05/17/C6dsg0.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">锦瑟年华</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">python实现FTP服务器</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-25</time><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1,935</span><span class="post-meta__separator">|</span><span>Reading time: 8 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="FTP服务的主动模式和被动模式"><a href="#FTP服务的主动模式和被动模式" class="headerlink" title="FTP服务的主动模式和被动模式"></a>FTP服务的主动模式和被动模式</h1><p>在开始之前，先聊一下FTP的主动模式和被动模式，两者的区别 ， 用两张图来表示可能会更加清晰一些：</p>
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FTP服务的主动模式和被动模式"><span class="toc-number">1.</span> <span class="toc-text">FTP服务的主动模式和被动模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#规范一下代码"><span class="toc-number">4.</span> <span class="toc-text">规范一下代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后，说一下权限问题"><span class="toc-number">5.</span> <span class="toc-text">最后，说一下权限问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python3-ftplib实现ftp客户端"><span class="toc-number">6.</span> <span class="toc-text">python3+ftplib实现ftp客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、程序说明"><span class="toc-number">6.1.</span> <span class="toc-text">一、程序说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-程序实现关键点"><span class="toc-number">6.1.1.</span> <span class="toc-text">1.1 程序实现关键点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-常用ftp命令与函数对应关系"><span class="toc-number">6.1.2.</span> <span class="toc-text">1.2 常用ftp命令与函数对应关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-程序截图"><span class="toc-number">6.1.3.</span> <span class="toc-text">1.3 程序截图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、程序源代码"><span class="toc-number">6.2.</span> <span class="toc-text">二、程序源代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python之FTP上传和下载"><span class="toc-number">7.</span> <span class="toc-text">python之FTP上传和下载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FTP对象方法说明"><span class="toc-number">7.1.</span> <span class="toc-text">FTP对象方法说明</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.guojing-em.com/static/resume/images/guojing-image.png"></div><div class="author-info__name text-center">GuoJing</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/Gavin-J" target="_blank">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">12</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://s1.ax1x.com/2018/05/17/C6dsg0.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">锦瑟年华</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">python实现FTP服务器</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-25</time><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">3,472</span><span class="post-meta__separator">|</span><span>Reading time: 15 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="FTP服务的主动模式和被动模式"><a href="#FTP服务的主动模式和被动模式" class="headerlink" title="FTP服务的主动模式和被动模式"></a>FTP服务的主动模式和被动模式</h1><p>在开始之前，先聊一下FTP的主动模式和被动模式，两者的区别 ， 用两张图来表示可能会更加清晰一些：</p>
 <p><em>主动模式：</em></p>
 <p><img src="/2018/11/25/python实现FTP服务器/1.png" alt="image"></p>
+<a id="more"></a>
 <p><em>主动模式工作过程：</em></p>
 <ul>
 <li>1.客户端以随机非特权端口N，就是大于1024的端口，对server端21端口发起连接</li>
@@ -119,6 +120,111 @@
 <p>到服务器上查看一下权限：</p>
 <p><img src="/2018/11/25/python实现FTP服务器/7.png" alt="image"></p>
 <p>可以看到权限已经被修改了。</p>
+<h1 id="python3-ftplib实现ftp客户端"><a href="#python3-ftplib实现ftp客户端" class="headerlink" title="python3+ftplib实现ftp客户端"></a>python3+ftplib实现ftp客户端</h1><h2 id="一、程序说明"><a href="#一、程序说明" class="headerlink" title="一、程序说明"></a>一、程序说明</h2><h3 id="1-1-程序实现关键点"><a href="#1-1-程序实现关键点" class="headerlink" title="1.1 程序实现关键点"></a>1.1 程序实现关键点</h3><p>python实现ftp客户端，主要会遇到以下四个问题：</p>
+<p>第一个问题是使用什么包实现—-我们这里是使用标准库中的ftplib</p>
+<p>第二个问题是怎么连接登录ftp服务器—-如果是ssh那么直接使用connect函数就直接完成连接和登录两项工作，而ftp要先用connect连接然后再用login登录</p>
+<p>第三个问题是怎么实现ftp操作—-怎么实现ftp操作这个问题有点麻烦，我们平时使用ftp命令登录后就可以输入下图中的命令进行ftp操作，对于其中少数一些命令ftplib确实支持通过sendcmd方法将命令传过去然后服务端就执行然后返回执行结果，但对于大多数命令ftplib都是通过一个方法去实现的（比如cd命令对应cwd()方法，mkdir命令对应mkd()方法等,参见1.2）</p>
+<p>第四个问题是怎么实现文件的上传下载—-文件上传下载其实也是ftp操作的一部份，如上面所说ftplib基本是每个命令都使用一个方法去实现，而对于上传的put命令对应的就是storbinary方法，对于下载的get命令对应的就是retrbinary方法。具体参数和用法可参看下边程序源代码</p>
+<p><img src="/2018/11/25/python实现FTP服务器/8.png" alt="image"></p>
+<h3 id="1-2-常用ftp命令与函数对应关系"><a href="#1-2-常用ftp命令与函数对应关系" class="headerlink" title="1.2 常用ftp命令与函数对应关系"></a>1.2 常用ftp命令与函数对应关系</h3><p>全部方法及方法参数解析可参看<a href="https://docs.python.org/3/library/ftplib.html" target="_blank" rel="noopener">官方文档</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">ftp命令</th>
+<th style="text-align:left">对应的FTP对象方法</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ls</td>
+<td style="text-align:left">nlst([pathname])</td>
+<td style="text-align:left">Return a list of file names as returned by the NLST command.</td>
+</tr>
+<tr>
+<td style="text-align:left">dir</td>
+<td style="text-align:left">dir([pathname])</td>
+<td style="text-align:left">Produce a directory listing as returned by the LIST command, printing it to standard output.</td>
+</tr>
+<tr>
+<td style="text-align:left">rename</td>
+<td style="text-align:left">rename(fromname, toname)</td>
+<td style="text-align:left">Rename file fromname on the server to toname.</td>
+</tr>
+<tr>
+<td style="text-align:left">delete</td>
+<td style="text-align:left">delete(filename)</td>
+<td style="text-align:left">Remove the file named filename from the server.</td>
+</tr>
+<tr>
+<td style="text-align:left">cd</td>
+<td style="text-align:left">cwd(pathname)</td>
+<td style="text-align:left">Set the current directory on the server.</td>
+</tr>
+<tr>
+<td style="text-align:left">mkdir</td>
+<td style="text-align:left">mkd(pathname)</td>
+<td style="text-align:left">Create a new directory on the server.</td>
+</tr>
+<tr>
+<td style="text-align:left">pwd</td>
+<td style="text-align:left">pwd()</td>
+<td style="text-align:left">Return the pathname of the current directory on the server.</td>
+</tr>
+<tr>
+<td style="text-align:left">rmdir</td>
+<td style="text-align:left">rmd(dirname)</td>
+<td style="text-align:left">Remove the directory named dirname on the server.</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">size(filename)</td>
+<td style="text-align:left">Request the size of the file named filename on the server.</td>
+</tr>
+<tr>
+<td style="text-align:left">quit</td>
+<td style="text-align:left">quit()</td>
+<td style="text-align:left">Send a QUIT command to the server and close the connection.</td>
+</tr>
+<tr>
+<td style="text-align:left">close</td>
+<td style="text-align:left">close()</td>
+<td style="text-align:left">Close the connection unilaterally.</td>
+</tr>
+<tr>
+<td style="text-align:left">put</td>
+<td style="text-align:left">storbinary(cmd, fp, blocksize=8192, callback=None, rest=None)</td>
+<td style="text-align:left">Store a file in binary transfer mode.</td>
+</tr>
+<tr>
+<td style="text-align:left">get</td>
+<td style="text-align:left">retrbinary(cmd, callback, blocksize=8192, rest=None)</td>
+<td style="text-align:left">Retrieve a file in binary transfer mode.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-3-程序截图"><a href="#1-3-程序截图" class="headerlink" title="1.3 程序截图"></a>1.3 程序截图</h3><p>程序执行结果截图：</p>
+<p><img src="/2018/11/25/python实现FTP服务器/9.png" alt="image"></p>
+<h2 id="二、程序源代码"><a href="#二、程序源代码" class="headerlink" title="二、程序源代码"></a>二、程序源代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line">from ftplib import FTP</span><br><span class="line"></span><br><span class="line">class MyFtp():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.ftp_client = FTP()</span><br><span class="line"></span><br><span class="line">    # 些函数实现ftp登录</span><br><span class="line">    def ftp_login(self,host_ip,username,password):</span><br><span class="line">        try:</span><br><span class="line">            self.ftp_client.connect(host_ip,port=21,timeout=10)</span><br><span class="line">        except :</span><br><span class="line">            logging.warning(&apos;network connect time out&apos;)</span><br><span class="line">            return 1001</span><br><span class="line">        try:</span><br><span class="line">            self.ftp_client.login(user=username, passwd=password)</span><br><span class="line">        except:</span><br><span class="line">            logging.warning(&apos;username or password error&apos;)</span><br><span class="line">            return 1002</span><br><span class="line">        return 1000</span><br><span class="line"></span><br><span class="line">    # 此函数执行ftp命令，并打印命令执行结果</span><br><span class="line">    def execute_some_command(self):</span><br><span class="line">        # 通运sendcmd方法形式执行pwd命令，为使用形式统一起见不推荐使用此种形式，而且其实大多数命令都是支持这种形式的</span><br><span class="line">        command_result = self.ftp_client.sendcmd(&apos;pwd&apos;)</span><br><span class="line">        logging.warning(&apos;command_result:%s&apos;% command_result)</span><br><span class="line">        # 通过直接使用pwd方法执行pwd命令，推荐统一使用此种形式</span><br><span class="line">        command_result = self.ftp_client.pwd()</span><br><span class="line">        logging.warning(&apos;command_result:%s&apos; % command_result)</span><br><span class="line">        # 上传文件；&apos;stor ftp_client.py&apos;告诉服务端将上传的文件保存为ftp_client.py，open()是以二进制读方式打开本地要上传的文件</span><br><span class="line">        command_result = self.ftp_client.storbinary(&apos;stor ftp_client.py&apos;,open(&quot;ftp_client.py&quot;,&apos;rb&apos;))</span><br><span class="line">        logging.warning(&apos;command_result:%s&apos; % command_result)</span><br><span class="line">        # 下载文件；&apos;retr .bash_profile&apos;告诉服务端要下载服务端当前目录下的.bash_profile文件，open()是以二进制写方式打开本地要存成的文件</span><br><span class="line">        command_result = self.ftp_client.retrbinary(&apos;retr .bash_profile&apos;, open(&apos;local_bash_profile&apos;, &apos;wb&apos;).write)</span><br><span class="line">        logging.warning(&apos;command_result:%s&apos; % command_result)</span><br><span class="line"></span><br><span class="line">    # 此函数实现退出ftp会话</span><br><span class="line">    def ftp_logout(self):</span><br><span class="line">        logging.warning(&apos;now will disconnect with server&apos;)</span><br><span class="line">        self.ftp_client.close()</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    # 要连接的主机ip</span><br><span class="line">    host_ip = &apos;192.68.220.128&apos;</span><br><span class="line">    # 用户名</span><br><span class="line">    username = &apos;ls&apos;</span><br><span class="line">    # 密码</span><br><span class="line">    password = &apos;abcd1234&apos;</span><br><span class="line">    # 实例化</span><br><span class="line">    my_ftp = MyFtp()</span><br><span class="line">    # 如果登录成功则执行命令，然后退出</span><br><span class="line">    if my_ftp.ftp_login(host_ip,username,password) == 1000:</span><br><span class="line">        logging.warning(&apos;login success , now will execute some command&apos;)</span><br><span class="line">        my_ftp.execute_some_command()</span><br><span class="line">        my_ftp.ftp_logout()</span><br></pre></td></tr></table></figure>
+<h1 id="python之FTP上传和下载"><a href="#python之FTP上传和下载" class="headerlink" title="python之FTP上传和下载"></a>python之FTP上传和下载</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># FTP操作</span><br><span class="line">import ftplib</span><br><span class="line"></span><br><span class="line">host = &apos;192.168.20.191&apos;</span><br><span class="line">username = &apos;ftpuser&apos;</span><br><span class="line">password = &apos;ftp123&apos;</span><br><span class="line">file = &apos;1.txt&apos;</span><br><span class="line"></span><br><span class="line">f = ftplib.FTP(host)  # 实例化FTP对象</span><br><span class="line">f.login(username, password)  # 登录</span><br><span class="line"></span><br><span class="line"># 获取当前路径</span><br><span class="line">pwd_path = f.pwd()</span><br><span class="line">print(&quot;FTP当前路径:&quot;, pwd_path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 逐行读取ftp文本文件</span><br><span class="line"># f.retrlines(&apos;RETR %s&apos; % file)</span><br><span class="line"></span><br><span class="line">def ftp_download():</span><br><span class="line">    &apos;&apos;&apos;以二进制形式下载文件&apos;&apos;&apos;</span><br><span class="line">    file_remote = &apos;1.txt&apos;</span><br><span class="line">    file_local = &apos;D:\\test_data\\ftp_download.txt&apos;</span><br><span class="line">    bufsize = 1024  # 设置缓冲器大小</span><br><span class="line">    fp = open(file_local, &apos;wb&apos;)</span><br><span class="line">    f.retrbinary(&apos;RETR %s&apos; % file_remote, fp.write, bufsize)</span><br><span class="line">    fp.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def ftp_upload():</span><br><span class="line">    &apos;&apos;&apos;以二进制形式上传文件&apos;&apos;&apos;</span><br><span class="line">    file_remote = &apos;ftp_upload.txt&apos;</span><br><span class="line">    file_local = &apos;D:\\test_data\\ftp_upload.txt&apos;</span><br><span class="line">    bufsize = 1024  # 设置缓冲器大小</span><br><span class="line">    fp = open(file_local, &apos;rb&apos;)</span><br><span class="line">    f.storbinary(&apos;STOR &apos; + file_remote, fp, bufsize)</span><br><span class="line">    fp.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ftp_download()</span><br><span class="line">ftp_upload()</span><br><span class="line">f.quit()</span><br></pre></td></tr></table></figure>
+<h2 id="FTP对象方法说明"><a href="#FTP对象方法说明" class="headerlink" title="FTP对象方法说明"></a>FTP对象方法说明</h2><ul>
+<li>login(user=’anonymous’,passwd=’’, acct=’’) 登录 FTP 服务器，所有参数都是可选的</li>
+<li>pwd() 获得当前工作目录</li>
+<li>cwd(path) 把当前工作目录设置为 path 所示的路径</li>
+<li>dir ([path[,…[,cb]]) 显示 path 目录里的内容，可选的参数 cb 是一个回调函数，会传递给 retrlines()方法</li>
+<li>nlst ([path[,…]) 与 dir()类似， 但返回一个文件名列表，而不是显示这些文件名</li>
+<li>retrlines(cmd [, cb]) 给定 FTP命令（如“ RETR filename”），用于下载文本文件。可选的回调函数 cb 用于处理文件的每一行</li>
+<li>retrbinary(cmd,cb[,bs=8192[, ra]]) 与 retrlines()类似，只是这个指令处理二进制文件。回调函数 cb 用于处理每一块（块大小默认为 8KB）下载的数据</li>
+<li>storlines(cmd, f) 给定 FTP 命令（如“ STOR filename”），用来上传文本文件。要给定一个文件对象 f</li>
+<li>storbinary(cmd, f,[,bs=8192]) 与 storlines()类似，只是这个指令处理二进制文件。要给定一个文件对象 f，上传块大小 bs 默认为 8KB</li>
+<li>rename(old, new) 把远程文件 old 重命名为 new</li>
+<li>delete(path) 删除位于 path 的远程文件</li>
+<li>mkd(directory) 创建远程目录</li>
+<li>rmd(directory) 删除远程目录</li>
+<li>quit() 关闭连接并退出</li>
+</ul>
+<p>参考：</p>
+<p><a href="https://docs.python.org/3/library/ftplib.html" target="_blank" rel="noopener">https://docs.python.org/3/library/ftplib.html</a></p>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">GuoJing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2018/11/25/python实现FTP服务器/">http://yoursite.com/2018/11/25/python实现FTP服务器/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python-ftp/">python ftp</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2018/11/25/docker环境的搭建-离线安装/"><span>docker环境的搭建(离线安装)</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
   clientID: '0acc1c951d3dc1bf9b59',
   clientSecret: '41718c817e6a78695cefaa40fa7d1c4d43c307a3',
